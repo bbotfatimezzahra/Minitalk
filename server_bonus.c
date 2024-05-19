@@ -1,15 +1,17 @@
 #include "minitalk.h"
 
-void	print_message(int signal)
+void	print_message(int signal, siginfo_t *client, void *context)
 {
 	static int		bit;
 	static unsigned char	c;
 
+	(void) context;
 	if (signal == SIGUSR1)
 		c |= (1 << (7 - bit));
 	bit++;
 	if (bit == 8)
 	{
+		kill(client->si_pid, SIGUSR1);
 		write(1, &c, 1);
 		c = 0;
 		bit = 0;
@@ -19,10 +21,11 @@ void	print_message(int signal)
 int	main()
 {
 	struct	sigaction	sa;
+	int ret;
 
 	printf("hello there i am the server and this is my PID:%d\n",getpid());
-	sa.sa_handler = &print_message;
-	sa.sa_flags = 0;
+	sa.sa_sigaction= &print_message;
+	sa.sa_flags = SA_SIGINFO;
 	while (1)
 	{
 		sigaction(SIGUSR1, &sa, NULL);

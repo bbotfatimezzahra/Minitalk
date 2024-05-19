@@ -1,44 +1,33 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: fbbot <marvin@42.fr>                       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/04 22:35:06 by fbbot             #+#    #+#              #
-#    Updated: 2024/03/31 07:47:39 by fbbot            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-SRCS := checkfunc.c headerfunc.c lstfunc.c fill_stack.c indexfunc.c\
-OBJS := $(SRCS:%.c=%.o)
-LIB := minitalk.a
 SERVER := server
 CLIENT := client
+BSERVER := server_bonus
+BCLIENT := client_bonus
+
 
 .PHONY : all bonus clean fclean re 
 
-.SECONDARY : $(OBJS)
-
 all : $(CLIENT) $(SERVER) 
 
-$(LIB) : $(OBJS)
-	ar rc $(LIB) $(OBJS)
+$(SERVER) : server.c
+	gcc server.c -o $(SERVER)
 
-$(SERVER) : $(LIB) server.c
-	gcc server.c -o $(SERVER) $(LIB)
+$(CLIENT) : client.c
+	gcc client.c minitalk_utils.c -o $(CLIENT)
 
-$(CLIENT) : $(LIB) client.c
-	gcc client.c -o $(CLIENT) $(LIB)
+bonus : $(BSERVER) $(BCLIENT)
 
-bonus : all 
+$(BSERVER) : server_bonus.c
+	gcc server_bonus.c -o $(BSERVER)
+
+$(BCLIENT) : client_bonus.c
+	gcc client_bonus.c minitalk_utils.c -o $(BCLIENT)
 
 clean :
-	rm -rf $(OBJS)
+	rm -rf $(SERVER) $(CLIENT) $(BSERVER) $(BCLIENT)
+
 
 fclean : clean
-	rm -rf $(LIB) $(CLIENT) $(SERVER)
 
 re : fclean all
