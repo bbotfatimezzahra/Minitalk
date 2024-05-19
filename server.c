@@ -2,7 +2,7 @@
 
 void	print_message(int signal)
 {
-	static int		bit;
+	static int				bit;
 	static unsigned char	c;
 
 	if (signal == SIGUSR1)
@@ -16,11 +16,11 @@ void	print_message(int signal)
 	}
 }
 
-int	main()
+int	main(void)
 {
-	struct	sigaction	sa;
+	struct sigaction	sa;
 
-	printf("hello there i am the server and this is my PID:%d\n",getpid());
+	printf("hello there i am the server and this is my PID:%d\n", getpid());
 	sa.sa_handler = &print_message;
 	sa.sa_flags = 0;
 	while (1)

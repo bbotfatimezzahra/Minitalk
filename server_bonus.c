@@ -2,7 +2,7 @@
 
 void	print_message(int signal, siginfo_t *client, void *context)
 {
-	static int		bit;
+	static int				bit;
 	static unsigned char	c;
 
 	(void) context;
@@ -18,13 +18,12 @@ void	print_message(int signal, siginfo_t *client, void *context)
 	}
 }
 
-int	main()
+int	main(void)
 {
-	struct	sigaction	sa;
-	int ret;
+	struct sigaction	sa;
 
-	printf("hello there i am the server and this is my PID:%d\n",getpid());
-	sa.sa_sigaction= &print_message;
+	printf("hello there i am the server and this is my PID:%d\n", getpid());
+	sa.sa_sigaction = &print_message;
 	sa.sa_flags = SA_SIGINFO;
 	while (1)
 	{

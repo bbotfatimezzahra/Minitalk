@@ -1,6 +1,6 @@
 #include "minitalk.h"
 
-void	send_message(int server, char * message)
+void	send_message(int server, char *message)
 {
 	int	bit;
 	int	i;
@@ -24,7 +24,7 @@ void	send_message(int server, char * message)
 
 int	main(int argc, char *argv[])
 {
-	int	server;
+	int		server;
 	char	*message;
 
 	if (check_arg(argc, argv))
