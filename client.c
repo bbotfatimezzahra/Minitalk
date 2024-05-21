@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 04:52:12 by fbbot             #+#    #+#             */
+/*   Updated: 2024/05/21 06:57:56 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 void	send_message(int server, char *message)
@@ -16,7 +28,7 @@ void	send_message(int server, char *message)
 			else
 				kill(server, SIGUSR2);
 			bit--;
-			usleep(255);
+			usleep(50);
 		}
 		i++;
 	}

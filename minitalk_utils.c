@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitalk_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 04:52:31 by fbbot             #+#    #+#             */
+/*   Updated: 2024/05/21 04:54:29 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 int	check_pid(char *str)
@@ -35,7 +47,7 @@ int	check_arg(int argc, char *argv[])
 {
 	if (argc != 3 || !check_pid(argv[1]))
 	{
-		printf("Incorrect format\n %%usage :\n \t./client (PID) (message)\n PID : Valid server pid.\n message : String to be sent if it contains white spaces please add double quotes.\n");
+		printf("%%usage :\n \t./client (PID) (message)\n");
 		return (-1);
 	}
 	return (0);

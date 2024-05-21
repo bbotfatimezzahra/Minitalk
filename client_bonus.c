@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 04:52:23 by fbbot             #+#    #+#             */
+/*   Updated: 2024/05/21 06:57:41 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 void	send_message(int server, char *message)
@@ -16,16 +28,21 @@ void	send_message(int server, char *message)
 			else
 				kill(server, SIGUSR2);
 			bit--;
-			usleep(255);
+			usleep(50);
 		}
 		i++;
+	}
+	while (bit < 7)
+	{
+		kill(server, SIGUSR2);
+		usleep(50);
+		bit++;
 	}
 }
 
 void	confirm_message(int signal)
 {
-	if (signal == SIGUSR1)
-		printf("message acknowledged\n");
+	printf("message acknowledged\n");
 }
 
 int	main(int argc, char *argv[])
@@ -38,7 +55,7 @@ int	main(int argc, char *argv[])
 		return (-1);
 	sa.sa_handler = &confirm_message;
 	sa.sa_flags = 0;
-	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	server = ft_atoi(argv[1]);
 	message = argv[2];
 	send_message(server, message);
