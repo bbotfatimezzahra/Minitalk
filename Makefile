@@ -6,7 +6,7 @@
 #    By: fbbot <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/21 04:51:53 by fbbot             #+#    #+#              #
-#    Updated: 2024/05/21 04:53:09 by fbbot            ###   ########.fr        #
+#    Updated: 2024/05/26 12:06:05 by fbbot            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ BCLIENT := client_bonus
 all : $(CLIENT) $(SERVER) 
 
 $(SERVER) : server.c
-	gcc server.c -o $(SERVER)
+	gcc server.c minitalk_utils.c -o $(SERVER)
 
 $(CLIENT) : client.c
 	gcc client.c minitalk_utils.c -o $(CLIENT)
@@ -31,7 +31,7 @@ $(CLIENT) : client.c
 bonus : $(BSERVER) $(BCLIENT)
 
 $(BSERVER) : server_bonus.c
-	gcc server_bonus.c -o $(BSERVER)
+	gcc server_bonus.c minitalk_utils.c -o $(BSERVER)
 
 $(BCLIENT) : client_bonus.c
 	gcc client_bonus.c minitalk_utils.c -o $(BCLIENT)

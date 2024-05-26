@@ -6,17 +6,24 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:41 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/21 04:53:18 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/26 12:04:08 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	print_message(int signal)
+void	print_message(int signal, siginfo_t *client, void *context)
 {
 	static int				bit;
 	static unsigned char	c;
+	static int				pid;
 
+	if (pid && (pid != client->si_pid) && (bit > 0))
+	{
+		c = 0;
+		bit = 0;
+	}
+	pid = client->si_pid;
 	if (signal == SIGUSR1)
 		c |= (1 << (7 - bit));
 	bit++;
@@ -32,9 +39,9 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	printf("hello there i am the server and this is my PID:%d\n", getpid());
-	sa.sa_handler = &print_message;
+	ft_putnbr_fd(getpid(), 1);
 	sa.sa_flags = 0;
+	sa.sa_sigaction = &print_message;
 	while (1)
 	{
 		sigaction(SIGUSR1, &sa, NULL);

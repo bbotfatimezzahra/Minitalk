@@ -6,11 +6,38 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:31 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/21 04:54:29 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/26 12:02:19 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+void	ft_putchar_fd(char c, int fd)
+{
+	if (fd >= 0)
+		write(fd, &c, 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	lnb;
+
+	if (fd < 0)
+		return ;
+	lnb = n;
+	if (lnb < 0)
+	{
+		ft_putchar_fd('-', fd);
+		lnb *= -1;
+	}
+	if (lnb < 10)
+		ft_putchar_fd(lnb + '0', fd);
+	else
+	{
+		ft_putnbr_fd(lnb / 10, fd);
+		ft_putnbr_fd(lnb % 10, fd);
+	}
+}
 
 int	check_pid(char *str)
 {
