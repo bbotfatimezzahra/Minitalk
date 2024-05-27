@@ -6,12 +6,13 @@
 #    By: fbbot <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/21 04:51:53 by fbbot             #+#    #+#              #
-#    Updated: 2024/05/26 12:06:05 by fbbot            ###   ########.fr        #
+#    Updated: 2024/05/27 19:24:55 by fbbot            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
+UTILS := minitalk_utils.c
 SERVER := server
 CLIENT := client
 BSERVER := server_bonus
@@ -22,19 +23,19 @@ BCLIENT := client_bonus
 
 all : $(CLIENT) $(SERVER) 
 
-$(SERVER) : server.c
-	gcc server.c minitalk_utils.c -o $(SERVER)
+$(SERVER) : server.c $(UTILS)
+	gcc server.c  $(UTILS) -o $(SERVER)
 
-$(CLIENT) : client.c
-	gcc client.c minitalk_utils.c -o $(CLIENT)
+$(CLIENT) : client.c $(UTILS)
+	gcc client.c  $(UTILS) -o $(CLIENT)
 
 bonus : $(BSERVER) $(BCLIENT)
 
-$(BSERVER) : server_bonus.c
-	gcc server_bonus.c minitalk_utils.c -o $(BSERVER)
+$(BSERVER) : server_bonus.c $(UTILS)
+	gcc server_bonus.c $(UTILS) -o $(BSERVER)
 
-$(BCLIENT) : client_bonus.c
-	gcc client_bonus.c minitalk_utils.c -o $(BCLIENT)
+$(BCLIENT) : client_bonus.c $(UTILS)
+	gcc client_bonus.c $(UTILS) -o $(BCLIENT)
 
 clean :
 	rm -rf $(SERVER) $(CLIENT) $(BSERVER) $(BCLIENT)

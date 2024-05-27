@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:31 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/27 18:52:22 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 19:21:11 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	check_pid(char *str)
 
 int	ft_atoi(const char *str)
 {
-	long	result;
-	int		i;
+	long long	result;
+	int			i;
 
 	result = 0;
 	i = 0;

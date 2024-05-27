@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:12 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/27 19:07:56 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 19:30:57 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char *argv[])
 	if (check_arg(argc, argv))
 		return (-1);
 	server = ft_atoi(argv[1]);
-	if (server == -1)
+	if (server < 0)
 		return (write(1, "error\n", 6));
 	message = argv[2];
 	send_message(server, message);

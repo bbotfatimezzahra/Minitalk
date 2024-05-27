@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:23 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/27 17:48:25 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 19:30:55 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	main(int argc, char *argv[])
 	sa.sa_flags = 0;
 	sigaction(SIGUSR2, &sa, NULL);
 	server = ft_atoi(argv[1]);
+	if (server < 0)
+		return (write(1, "error\n", 6));
 	message = argv[2];
 	send_message(server, message);
 	return (0);
