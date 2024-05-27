@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:31 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/26 12:02:19 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 18:52:22 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_pid(char *str)
 	{
 		if (str[i] < '0' || str[i] > '9')
 		{
-			printf("Incorrect PID\n");
+			write(1, "Incorrect PID\n", 14);
 			return (0);
 		}
 		i++;
@@ -58,15 +58,19 @@ int	check_pid(char *str)
 
 int	ft_atoi(const char *str)
 {
-	int	result;
-	int	i;
+	long	result;
+	int		i;
 
 	result = 0;
 	i = 0;
 	while (str[i] && ((str[i] >= 9 && str[i] <= 13) || str[i] == 32))
 		i++;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+	{
 		result = (result * 10) + (str[i++] - '0');
+		if (result > INT_MAX || result == 0)
+			return (-1);
+	}
 	return (result);
 }
 
@@ -74,7 +78,7 @@ int	check_arg(int argc, char *argv[])
 {
 	if (argc != 3 || !check_pid(argv[1]))
 	{
-		printf("%%usage :\n \t./client (PID) (message)\n");
+		write(1, "%usage :\n \t./client (PID) (message)\n", 36);
 		return (-1);
 	}
 	return (0);

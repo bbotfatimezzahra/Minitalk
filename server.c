@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:41 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/26 12:04:08 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 16:49:46 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	print_message(int signal, siginfo_t *client, void *context)
 	static unsigned char	c;
 	static int				pid;
 
+	(void) context;
 	if (pid && (pid != client->si_pid) && (bit > 0))
 	{
 		c = 0;
@@ -40,7 +41,7 @@ int	main(void)
 	struct sigaction	sa;
 
 	ft_putnbr_fd(getpid(), 1);
-	sa.sa_flags = 0;
+	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = &print_message;
 	while (1)
 	{

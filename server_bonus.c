@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:51 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/21 06:18:10 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 19:09:06 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,26 @@ void	print_message(int signal, siginfo_t *client, void *context)
 {
 	static int				bit;
 	static unsigned char	c;
+	static int				pid;
 
 	(void) context;
+	if (pid && (pid != client->si_pid) && (bit > 0))
+	{
+		c = 0;
+		bit = 0;
+	}
+	pid = client->si_pid;
 	if (signal == SIGUSR1)
 		c |= (1 << (7 - bit));
 	bit++;
 	if (bit == 8)
 	{
 		if (c == '\0')
-			kill(client->si_pid, SIGUSR2);
-		else
-			write(1, &c, 1);
+		{
+			if (kill(client->si_pid, SIGUSR2))
+				write(1, "acknowledgement not sent\n", 25);
+		}
+		write(1, &c, 1);
 		c = 0;
 		bit = 0;
 	}
@@ -36,7 +45,7 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	printf("hello there i am the server and this is my PID:%d\n", getpid());
+	ft_putnbr_fd(getpid(), 1);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = &print_message;
 	while (1)

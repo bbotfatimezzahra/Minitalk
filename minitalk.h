@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:53:01 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/26 12:05:09 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 19:00:07 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <signal.h>
+# include <limits.h>
 
 int		ft_isdigit(int c);
 int		check_pid(char *str);

@@ -6,11 +6,24 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 04:52:23 by fbbot             #+#    #+#             */
-/*   Updated: 2024/05/21 06:57:41 by fbbot            ###   ########.fr       */
+/*   Updated: 2024/05/27 17:48:25 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+void	send_null(int server)
+{
+	int	bit;
+
+	bit = 0;
+	while (bit < 8)
+	{
+		kill(server, SIGUSR2);
+		usleep(50);
+		bit++;
+	}
+}
 
 void	send_message(int server, char *message)
 {
@@ -24,25 +37,26 @@ void	send_message(int server, char *message)
 		while (bit >= 0)
 		{
 			if ((message[i] >> bit) & 1)
-				kill(server, SIGUSR1);
+			{
+				if (kill(server, SIGUSR1))
+					write(1, "bit 1 not sent\n", 13);
+			}
 			else
-				kill(server, SIGUSR2);
+			{
+				if (kill(server, SIGUSR2))
+					write(1, "bit 0 not sent\n", 13);
+			}
 			bit--;
-			usleep(50);
+			usleep(150);
 		}
 		i++;
 	}
-	while (bit < 7)
-	{
-		kill(server, SIGUSR2);
-		usleep(50);
-		bit++;
-	}
+	send_null(server);
 }
 
 void	confirm_message(int signal)
 {
-	printf("message acknowledged\n");
+	write(1, "message acknowledged\n", 21);
 }
 
 int	main(int argc, char *argv[])
